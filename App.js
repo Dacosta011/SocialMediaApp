@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import LogInContextProvider, {
+  LogInContext,
+} from "./store/context/LogInContext";
+import { useContext } from "react";
+import LogStack from "./navigators/LogStack";
+import SocialStack from "./navigators/SocialStack";
 
-export default function App() {
+function Navigator() {
+  const LogInCtx = useContext(LogInContext);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {!LogInCtx.isAutenticated && <LogStack />}
+      {LogInCtx.isAutenticated && <SocialStack />}
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <LogInContextProvider>
+        <Navigator />
+      </LogInContextProvider>
+    </>
+  );
+}
