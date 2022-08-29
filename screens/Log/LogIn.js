@@ -21,12 +21,12 @@ export default function LogIn({ navigation }) {
     signInWithEmailAndPassword(auth, user.email, user.password)
       .then((userCredentials) => {
         const userLogged = userCredentials.user;
-        setUser({ ...setUser, id: userLogged.uid });
+        console.log("user " + userLogged.uid);
+        logInCtx.authenticate(userLogged.uid);
       })
       .catch((error) => {
         console.log(error);
       });
-    logInCtx.authenticate(user.id);
   }
 
   function handleTextChange(key, value) {

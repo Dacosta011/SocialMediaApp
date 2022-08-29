@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { setItem, getItem } from "../../utils/asyncStorage";
+import { setItem, getItem, removeItem } from "../../utils/asyncStorage";
 
 export const LogInContext = createContext({
   id: "",
@@ -23,18 +23,19 @@ function LogInContextProvider({ children }) {
     getItembykey("token");
   }, []);
 
-  async function authenticate(id) {
-    setId(id);
+  async function authenticate(idLogged) {
+    setId(idLogged);
     setIsAutenticated(true);
-    await setItem("token", id);
+    await setItem("token", idLogged);
   }
-  function logout() {
+  async function logout() {
     setId(null);
     setIsAutenticated(false);
+    await removeItem("token");
   }
 
   const value = {
-    id,
+    id: id,
     isAutenticated: isAutenticated,
     authenticate,
     logout,

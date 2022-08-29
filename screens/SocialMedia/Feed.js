@@ -8,7 +8,7 @@ export default function Feed() {
       const value = await getItem(key);
       console.log(value);
     }
-    getItembykey("id");
+    getItembykey("token");
   }, []);
 
   return (
