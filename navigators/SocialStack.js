@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 export default function SocialStack({ navigation }) {
   const logInCtx = useContext(LogInContext);
+  
 
   async function handleLogOut() {
     logInCtx.logout();

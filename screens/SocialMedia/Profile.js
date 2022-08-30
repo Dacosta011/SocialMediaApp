@@ -15,9 +15,12 @@ import { LogInContext } from "../../store/context/LogInContext";
 import { firestore } from "../../database/firebase";
 import { getDocs, collection, query, where } from "firebase/firestore";
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const LoginCtx = useContext(LogInContext);
   const [user, setUser] = useState({});
+
+
+  
 
   useFocusEffect(
     useCallback(() => {
@@ -32,7 +35,6 @@ export default function Profile() {
           setUser(doc.data());
         });
       }
-
       test();
     }, [])
   );
@@ -199,10 +201,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 15,
     flexWrap: "wrap",
+    justifyContent: "center",
   },
   image: {
     width: 100,
     minWidth: 100,
+    maxWidth: 100,
     height: 100,
     flex: 1,
     margin: 5,
