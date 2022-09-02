@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../constants/colors";
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
   proImage: {
     width: 40,
     height: 40,
-    borderRadius: "50%",
+    borderRadius: Platform.OS == "android" ? 100 : "50%",
     marginRight: 10,
   },
   middle: {

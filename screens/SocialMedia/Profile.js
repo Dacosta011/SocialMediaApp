@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useContext, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -15,17 +16,15 @@ import { LogInContext } from "../../store/context/LogInContext";
 import { firestore } from "../../database/firebase";
 import { getDocs, collection, query, where } from "firebase/firestore";
 
-export default function Profile({navigation}) {
+export default function Profile({ navigation }) {
   const LoginCtx = useContext(LogInContext);
   const [user, setUser] = useState({});
-
-
-  
+  const [loading, setLoading] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
-      console.log(LoginCtx.id);
       async function test() {
+        setLoading(true);
         const q = query(
           collection(firestore, "users"),
           where("id", "==", LoginCtx.id)
@@ -34,111 +33,119 @@ export default function Profile({navigation}) {
         querySnapshot.forEach((doc) => {
           setUser(doc.data());
         });
+        setLoading(false);
+        console.log(user);
       }
       test();
     }, [])
   );
-  console.log(user.name);
+
   return (
     <ScrollView style={styles.container}>
-      <ImageBackground
-        source={{
-          uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-        }}
-        style={styles.backgroundImg}
-        imageStyle={{ opacity: 0.5 }}
-      >
-        <Text style={styles.profileText}>David Acosta</Text>
-        <TouchableOpacity style={styles.followBtn}>
-          <Ionicons
-            name="person-add-outline"
-            size={20}
-            color={colors.primary}
-          />
-          <Text style={styles.textFollow}>Follow</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-      <View style={styles.profInfoContainer}>
-        <View style={styles.profileBioCntainer}>
-          <Text style={styles.profileBio}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-            expedita atque explicabo voluptatem magni assumenda sint numquam
-            unde labore voluptates
-          </Text>
-        </View>
-        <View style={styles.profileFollowContainer}>
-          <View style={styles.followBox}>
-            <Text style={styles.followText}>Followers</Text>
-            <Text style={styles.followNumber}>1234</Text>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <>
+          <ImageBackground
+            source={{
+              uri: user.image,
+            }}
+            style={styles.backgroundImg}
+            imageStyle={{ opacity: 0.5 }}
+          >
+            <Text style={styles.profileText}>{user.name}</Text>
+            <TouchableOpacity style={styles.followBtn}>
+              <Ionicons
+                name="person-add-outline"
+                size={20}
+                color={colors.primary}
+              />
+              <Text style={styles.textFollow}>Follow</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+          <View style={styles.profInfoContainer}>
+            <View style={styles.profileBioCntainer}>
+              <Text style={styles.profileBio}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti expedita atque explicabo voluptatem magni assumenda
+                sint numquam unde labore voluptates
+              </Text>
+            </View>
+            <View style={styles.profileFollowContainer}>
+              <View style={styles.followBox}>
+                <Text style={styles.followText}>Followers</Text>
+                <Text style={styles.followNumber}>1234</Text>
+              </View>
+              <View style={styles.followBox}>
+                <Text style={styles.followText}>Following</Text>
+                <Text style={styles.followNumber}>123</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.followBox}>
-            <Text style={styles.followText}>Following</Text>
-            <Text style={styles.followNumber}>123</Text>
+          <View style={styles.imagesContainer}>
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
+              }}
+            />
           </View>
-        </View>
-      </View>
-      <View style={styles.imagesContainer}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=2000",
-          }}
-        />
-      </View>
+        </>
+      )}
     </ScrollView>
   );
 }
